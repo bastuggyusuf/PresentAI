@@ -66,7 +66,10 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 app.add_middleware(SecurityHeadersMiddleware)
 
 from fastapi.staticfiles import StaticFiles
-_web_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "web")
+_current_dir = os.path.dirname(os.path.abspath(__file__))
+_web_dir = os.path.join(_current_dir, "web")
+if not os.path.exists(_web_dir):
+    _web_dir = os.path.join(_current_dir, "..", "web")
 app.mount("/web", StaticFiles(directory=_web_dir), name="web")
 
 rag = PresentAIRAG()
