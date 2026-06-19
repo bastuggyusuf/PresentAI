@@ -1,0 +1,116 @@
+═══════════════════════════════════════════════════════════════════
+                    PresentAI — Gelecek Sürüm Notları
+                    (MVP Sonrası Yapılacaklar Listesi)
+                    Oluşturma Tarihi: 2026-06-19
+═══════════════════════════════════════════════════════════════════
+
+Bu dosya, MVP sunumu sonrasında uygulanacak geliştirme ve iyileştirme
+maddelerini içermektedir. Şu anda zorunlu değildir ancak ürünün
+ölçeklenmesi ve profesyonelleşmesi için planlanmıştır.
+
+───────────────────────────────────────────────────────────────────
+ 🗄️  VERİTABANI & ALTYAPI
+───────────────────────────────────────────────────────────────────
+
+[ ] SQLite → PostgreSQL geçişi (çoklu kullanıcı ve eşzamanlı yazma desteği)
+[ ] Alembic ile veritabanı migration framework kurulumu
+[ ] Connection pooling (SQLAlchemy veya asyncpg)
+[ ] Veritabanı yedekleme stratejisi (otomatik günlük backup)
+[ ] Redis entegrasyonu (session, cache, rate-limit state)
+[ ] ChromaDB → Pinecone/Weaviate geçişi (managed vector DB)
+
+───────────────────────────────────────────────────────────────────
+ 🔐  GÜVENLİK & KİMLİK DOĞRULAMA
+───────────────────────────────────────────────────────────────────
+
+[ ] JWT tabanlı kullanıcı kimlik doğrulama sistemi
+[ ] Çoklu kullanıcı (multi-tenant) desteği
+[ ] OAuth2 entegrasyonu (Google, Microsoft hesaplarıyla giriş)
+[ ] CSRF token koruması
+[ ] Rate limiting → Redis-backed (dağıtık ortam desteği)
+[ ] API key rotation mekanizması
+[ ] HTTPS zorunlu yönlendirme (HSTS)
+[ ] Content Security Policy (CSP) header'ları
+
+───────────────────────────────────────────────────────────────────
+ 💳  ÖDEME & ABONELİK
+───────────────────────────────────────────────────────────────────
+
+[ ] Stripe/Iyzico gerçek ödeme entegrasyonu
+[ ] Abonelik planları yönetimi (Free, Pro, Enterprise)
+[ ] Fatura oluşturma ve e-posta gönderimi
+[ ] Kullanım kotaları ve limit yönetimi
+[ ] Deneme süresi (trial period) mekanizması
+
+───────────────────────────────────────────────────────────────────
+ 🎨  FRONTEND & UX
+───────────────────────────────────────────────────────────────────
+
+[ ] Tailwind CSS CDN → Production build (CLI ile derleme)
+[ ] Mobil hamburger menü eklenmesi
+[ ] PWA (Progressive Web App) desteği
+[ ] Erişilebilirlik (ARIA etiketleri, klavye navigasyonu, ekran okuyucu)
+[ ] Dark/Light tema geçişi
+[ ] Çoklu dil desteği (i18n — Türkçe, İngilizce)
+[ ] Open Graph ve Twitter Card meta etiketleri (sosyal medya paylaşımı)
+[ ] Sunum sırasında gerçek zamanlı canlı dashboard (WebSocket)
+
+───────────────────────────────────────────────────────────────────
+ 🤖  YAPAY ZEKA & ANALİZ
+───────────────────────────────────────────────────────────────────
+
+[ ] Sunum video kaydı ve tekrar izleme özelliği
+[ ] Ses tonu analizi (pitch, hız, monotonluk tespiti)
+[ ] Beden dili analizi iyileştirmeleri (el hareketleri, duruş)
+[ ] Sunucu karşılaştırma (benchmark) sistemi
+[ ] Yapay zeka model fallback zinciri (Gemini → OpenRouter → yerel model)
+[ ] Sunum şablonları ve önerilen yapılar
+[ ] Soru-cevap simülasyonu (yatırımcı soruları pratiği)
+
+───────────────────────────────────────────────────────────────────
+ 📊  ANALİTİK & RAPORLAMA
+───────────────────────────────────────────────────────────────────
+
+[ ] Detaylı sunum raporu PDF çıktısı
+[ ] Haftalık/aylık ilerleme e-posta raporları
+[ ] Takım bazlı analitik dashboard
+[ ] A/B test karşılaştırma (aynı sunumun farklı versiyonları)
+[ ] Radar chart → Gerçek verilerle dinamik hesaplama
+
+───────────────────────────────────────────────────────────────────
+ 🏢  KURUMSAL ÖZELLİKLER
+───────────────────────────────────────────────────────────────────
+
+[ ] Takım yönetimi paneli (admin, editor, viewer rolleri)
+[ ] Şirket bazlı veri izolasyonu
+[ ] SSO (Single Sign-On) entegrasyonu
+[ ] Denetim kaydı (audit log) sistemi
+[ ] SLA & uptime izleme
+
+───────────────────────────────────────────────────────────────────
+ 🚀  DEVOPS & ÖLÇEKLEME
+───────────────────────────────────────────────────────────────────
+
+[ ] CI/CD pipeline (GitHub Actions)
+[ ] Staging ortamı kurulumu
+[ ] Otomatik test suite (pytest, Playwright)
+[ ] Sentry/LogRocket hata izleme entegrasyonu
+[ ] Performans izleme (APM — Application Performance Monitoring)
+[ ] Auto-scaling konfigürasyonu
+[ ] CDN entegrasyonu (Cloudflare)
+[ ] Custom domain + SSL sertifikası
+
+───────────────────────────────────────────────────────────────────
+ 📱  CHROME EKLENTİSİ
+───────────────────────────────────────────────────────────────────
+
+[ ] Extension icon tasarımları (16x16, 48x48, 128x128)
+[ ] Chrome Web Store yayınlama
+[ ] Firefox/Edge uyumluluğu
+[ ] Otomatik güncelleme mekanizması
+[ ] Extension içi ayarlar senkronizasyonu (chrome.storage.sync)
+
+═══════════════════════════════════════════════════════════════════
+ Not: Bu liste, MVP sunumu sonrasında öncelik sırasına göre
+ değerlendirilecek ve sprint planlamasına alınacaktır.
+═══════════════════════════════════════════════════════════════════

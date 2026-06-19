@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PresentAI Pro Plan üyeliğinizi başlatın. Güvenli ödeme simülasyonu.">
+  <title>PresentAI — Güvenli Ödeme</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #312e81 100%);
+    }
+  </style>
+</head>
+<body class="gradient-bg min-h-screen text-white flex items-center justify-center p-4">
+
+  <div class="max-w-4xl w-full bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-2xl overflow-hidden shadow-2xl grid md:grid-cols-2">
+    
+    <!-- Sol Panel: Sipariş Özeti -->
+    <div class="p-8 border-b md:border-b-0 md:border-r border-slate-800 bg-slate-950/40 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center gap-2 mb-8">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-md">🎤</div>
+          <span class="text-xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">PresentAI</span>
+          <span class="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-bold border border-purple-500/30">DEMO MODU</span>
+        </div>
+        
+        <p class="text-sm text-slate-400 uppercase font-semibold tracking-wider mb-2">Abonelik</p>
+        <h2 class="text-3xl font-black mb-6">PresentAI Pro Plan</h2>
+        
+        <div class="space-y-4">
+          <div class="flex justify-between items-center text-sm">
+            <span class="text-slate-300">Pro Sürüm Aylık Üyelik</span>
+            <span class="font-bold">₺149,00</span>
+          </div>
+          <div class="flex justify-between items-center text-sm">
+            <span class="text-slate-300">14 Günlük Deneme Süresi</span>
+            <span class="text-green-400 font-semibold">Aktif</span>
+          </div>
+          <hr class="border-slate-800">
+          <div class="flex justify-between items-center text-lg font-bold">
+            <span>Bugün Ödenecek Tutar</span>
+            <span class="text-purple-400">₺0,00</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">14 gün sonra aylık ₺149,00 olarak faturalandırılacaktır. İstediğiniz zaman iptal edebilirsiniz.</p>
+        </div>
+      </div>
+      
+      <div class="mt-8 text-xs text-slate-500 flex items-center gap-2">
+        <span>🔒 Güvenli 256-Bit SSL Ödeme Altyapısı</span>
+      </div>
+    </div>
+    
+    <!-- Sağ Panel: Kart Bilgileri -->
+    <div class="p-8 flex flex-col justify-between">
+      <div>
+        <h3 class="text-xl font-bold mb-2">Ödeme Bilgileri</h3>
+        <div class="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3 text-xs text-amber-400 mb-4 flex gap-2">
+          <span>⚠️</span>
+          <span>Bu sayfa bir <strong>ödeme simülasyonudur</strong>. Herhangi bir gerçek işlem yapılmaz. Varsayılan bilgileri kullanarak deneme yapabilirsiniz.</span>
+        </div>
+        
+        <form id="paymentForm" class="space-y-4">
+          <div>
+            <label class="block text-xs text-slate-400 font-semibold mb-2">E-POSTA ADRESİ</label>
+            <input type="email" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-purple-500 transition" placeholder="isim@example.com" value="demo@bologna.edu.tr">
+          </div>
+          
+          <div>
+            <label class="block text-xs text-slate-400 font-semibold mb-2">KART BİLGİLERİ</label>
+            <div class="relative">
+              <input type="text" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-purple-500 transition tracking-widest" placeholder="4242 4242 4242 4242" value="4242 4242 4242 4242">
+              <span class="absolute right-4 top-3.5 text-xs text-slate-500">💳</span>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-slate-400 font-semibold mb-2">SKT (AA/YY)</label>
+              <input type="text" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-purple-500 transition text-center" placeholder="12/28" value="12/28">
+            </div>
+            <div>
+              <label class="block text-xs text-slate-400 font-semibold mb-2">CVC</label>
+              <input type="text" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-purple-500 transition text-center" placeholder="123" value="123">
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-xs text-slate-400 font-semibold mb-2">KART ÜZERİNDEKİ İSİM</label>
+            <input type="text" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-purple-500 transition" placeholder="Ahmet Yılmaz" value="Ahmet Yılmaz">
+          </div>
+          
+          <button type="submit" id="payButton" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg py-4 font-bold text-sm hover:opacity-90 transition flex items-center justify-center gap-2">
+            <span>Güvenli Öde & Pro'yu Başlat</span>
+          </button>
+        </form>
+      </div>
+      
+      <div class="mt-8 text-center">
+        <a href="index.html" class="text-xs text-slate-500 hover:text-slate-300 transition">← Vazgeç ve Ana Sayfaya Dön</a>
+      </div>
+    </div>
+    
+  </div>
+
+  <script>
+    document.getElementById('paymentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('payButton');
+      
+      // Simulate Stripe processing
+      btn.disabled = true;
+      btn.innerHTML = `
+        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Ödeme Onaylanıyor...</span>
+      `;
+      
+      setTimeout(() => {
+        btn.innerHTML = `
+          <span>✅ Başarılı! Yönlendiriliyorsunuz...</span>
+        `;
+        setTimeout(() => {
+          // Redirect to dashboard with payment success query parameter
+          window.location.href = 'dashboard.html?payment=success';
+        }, 1500);
+      }, 2000);
+    });
+  </script>
+
+</body>
+</html>

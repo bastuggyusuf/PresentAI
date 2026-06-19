@@ -1,0 +1,61 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# ────────────────────────────────────────────────────────────
+# SECRETS — API anahtarları, kimlik bilgileri (asla commit etme)
+# ────────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials.json
+google-services.json
+
+# ────────────────────────────────────────────────────────────
+# Backend (Python)
+# ────────────────────────────────────────────────────────────
+Backend/.venv/
+Backend/.venv_ml/
+Backend/.venv_train/
+Backend/vector_db/
+Backend/__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+temp_*.pdf
+temp_*.wav
+temp_ws_*.wav
+
+# ────────────────────────────────────────────────────────────
+# Android build artefaktları
+# ────────────────────────────────────────────────────────────
+app/build/
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# ────────────────────────────────────────────────────────────
+# Eğitim çıktıları (büyük dosyalar)
+# ────────────────────────────────────────────────────────────
+Backend/data/
+Backend/models/
+*.keras
+*.h5
+*.ckpt

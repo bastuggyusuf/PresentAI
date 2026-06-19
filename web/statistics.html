@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PresentAI sunum istatistikleri; zaman içindeki gelişim grafikleri, dolgu kelime oranları ve duygusal tonlama trendleri.">
+  <title>PresentAI — İstatistikler</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .gradient-text {
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-glow { box-shadow: 0 0 40px rgba(139, 92, 246, 0.08); }
+    .filter-btn.active { background: #7c3aed; color: white; }
+  </style>
+</head>
+<body class="bg-slate-950 text-white min-h-screen">
+
+  <!-- TOP BAR -->
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-lg">🎤</div>
+        <span class="text-xl font-extrabold gradient-text">PresentAI</span>
+      </a>
+      <nav class="hidden md:flex gap-6 text-sm font-medium text-slate-300">
+        <a href="dashboard.html" class="hover:text-white">📊 Geçmiş</a>
+        <a href="statistics.html" class="text-white">📈 İstatistik</a>
+        <a href="datasets.html" class="hover:text-white">📁 Veri Setleri</a>
+        <a href="settings.html" class="hover:text-white">⚙️ Ayarlar</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <span class="hidden md:inline text-sm text-slate-400">Merhaba, <strong class="text-white">Asia</strong> 👋</span>
+        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center font-bold">A</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-6 py-8">
+      <h1 class="text-3xl font-black mb-1">📈 Detaylı İstatistikler</h1>
+      <p class="text-slate-400 mb-6">Sunum performansınızın derinlemesine analizi</p>
+
+      <!-- FILTRE BUTONLARI -->
+      <div class="flex gap-2 mb-6">
+        <button class="filter-btn active px-4 py-2 text-xs font-bold rounded-lg border border-slate-700 transition" data-range="7">Son 7 Gün</button>
+        <button class="filter-btn px-4 py-2 text-xs font-bold rounded-lg border border-slate-700 hover:bg-slate-800 transition" data-range="30">Son 30 Gün</button>
+        <button class="filter-btn px-4 py-2 text-xs font-bold rounded-lg border border-slate-700 hover:bg-slate-800 transition" data-range="90">Son 3 Ay</button>
+        <button class="filter-btn px-4 py-2 text-xs font-bold rounded-lg border border-slate-700 hover:bg-slate-800 transition" data-range="all">Tümü</button>
+      </div>
+
+      <!-- ÖZET KARTLAR -->
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4" id="summaryCards">
+        <div class="bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 rounded-xl p-4 stat-glow">
+          <div class="text-xs text-blue-300 font-bold uppercase tracking-wider mb-1">Toplam Sunum</div>
+          <div class="text-3xl font-black" id="stat-total">—</div>
+        </div>
+        <div class="bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/20 rounded-xl p-4 stat-glow">
+          <div class="text-xs text-purple-300 font-bold uppercase tracking-wider mb-1">Ort. Skor</div>
+          <div class="text-3xl font-black" id="stat-avg">—</div>
+        </div>
+        <div class="bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl p-4 stat-glow">
+          <div class="text-xs text-green-300 font-bold uppercase tracking-wider mb-1">En İyi</div>
+          <div class="text-3xl font-black" id="stat-best">—</div>
+        </div>
+        <div class="bg-gradient-to-br from-yellow-500/10 to-yellow-500/5 border border-yellow-500/20 rounded-xl p-4 stat-glow">
+          <div class="text-xs text-yellow-300 font-bold uppercase tracking-wider mb-1">Ort. WPM</div>
+          <div class="text-3xl font-black" id="stat-wpm">—</div>
+        </div>
+        <div class="bg-gradient-to-br from-pink-500/10 to-pink-500/5 border border-pink-500/20 rounded-xl p-4 stat-glow">
+          <div class="text-xs text-pink-300 font-bold uppercase tracking-wider mb-1">Toplam Süre</div>
+          <div class="text-3xl font-black" id="stat-duration">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRAFİKLER -->
+  <main class="max-w-7xl mx-auto px-6 py-8 space-y-6">
+
+    <!-- SKOR TRENDİ -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+      <h2 class="text-xl font-bold mb-1">Skor Gelişimi</h2>
+      <p class="text-sm text-slate-400 mb-4">Sunumlarınızın genel skor trendi</p>
+      <canvas id="scoreTrendChart" height="90"></canvas>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <!-- WPM TRENDİ -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <h2 class="text-xl font-bold mb-1">Konuşma Hızı (WPM)</h2>
+        <p class="text-sm text-slate-400 mb-4">İdeal: 120-150 kelime/dk</p>
+        <canvas id="wpmChart" height="160"></canvas>
+      </div>
+
+      <!-- DOLGU KELİME TRENDİ -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <h2 class="text-xl font-bold mb-1">Dolgu Kelime Kullanımı</h2>
+        <p class="text-sm text-slate-400 mb-4">Azalma trendi başarıyı gösterir</p>
+        <canvas id="fillerChart" height="160"></canvas>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <!-- DUYGU DAĞILIMI -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <h2 class="text-xl font-bold mb-1">Duygu Dağılımı</h2>
+        <p class="text-sm text-slate-400 mb-4">Tüm sunumlarınızda baskın duygular</p>
+        <canvas id="emotionPieChart" height="200"></canvas>
+      </div>
+
+      <!-- EN İYİ vs EN KÖTÜ -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <h2 class="text-xl font-bold mb-4">🏆 En İyi vs En Kötü Sunum</h2>
+        <div class="grid grid-cols-2 gap-4" id="bestWorstCards">
+          <div class="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
+            <div class="text-xs text-green-300 font-bold uppercase mb-2">🏆 En İyi</div>
+            <div class="text-4xl font-black text-green-400 mb-1" id="best-score">—</div>
+            <div class="text-xs text-slate-400" id="best-date">—</div>
+            <div class="mt-3 space-y-1 text-xs text-slate-400">
+              <div>WPM: <span class="text-white font-bold" id="best-wpm">—</span></div>
+              <div>Dolgu: <span class="text-white font-bold" id="best-filler">—</span></div>
+              <div>Duygu: <span class="text-white font-bold" id="best-emotion">—</span></div>
+            </div>
+          </div>
+          <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-4 text-center">
+            <div class="text-xs text-red-300 font-bold uppercase mb-2">📉 En Düşük</div>
+            <div class="text-4xl font-black text-red-400 mb-1" id="worst-score">—</div>
+            <div class="text-xs text-slate-400" id="worst-date">—</div>
+            <div class="mt-3 space-y-1 text-xs text-slate-400">
+              <div>WPM: <span class="text-white font-bold" id="worst-wpm">—</span></div>
+              <div>Dolgu: <span class="text-white font-bold" id="worst-filler">—</span></div>
+              <div>Duygu: <span class="text-white font-bold" id="worst-emotion">—</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SÜRE ANALİZİ -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+      <h2 class="text-xl font-bold mb-1">Sunum Süreleri</h2>
+      <p class="text-sm text-slate-400 mb-4">Her sunum için harcanan süre</p>
+      <canvas id="durationChart" height="70"></canvas>
+    </div>
+
+  </main>
+
+  <script src="config.js"></script>
+  <script src="statistics.js"></script>
+</body>
+</html>

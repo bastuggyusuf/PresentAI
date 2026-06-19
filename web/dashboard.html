@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PresentAI Dashboard ile geçmiş sunumlarınızın detaylı raporlarını, skorlarını ve gelişim analizlerini takip edin.">
+  <title>PresentAI Dashboard — Sunum Geçmişim</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .gradient-text {
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-white min-h-screen">
+
+  <!-- TOP BAR -->
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-lg">🎤</div>
+        <span class="text-xl font-extrabold gradient-text">PresentAI</span>
+      </a>
+      <nav class="hidden md:flex gap-6 text-sm font-medium text-slate-300">
+        <a href="dashboard.html" class="text-white">📊 Geçmiş</a>
+        <a href="statistics.html" class="hover:text-white">📈 İstatistik</a>
+        <a href="datasets.html" class="hover:text-white">📁 Veri Setleri</a>
+        <a href="settings.html" class="hover:text-white">⚙️ Ayarlar</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <span class="hidden md:inline text-sm text-slate-400">Merhaba, <strong class="text-white">Asia</strong> 👋</span>
+        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center font-bold">A</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO STATS -->
+  <section class="border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-6 py-8">
+      <h1 class="text-3xl font-black mb-1">Sunum Geçmişin</h1>
+      <p class="text-slate-400 mb-8">Toplam ilerlemen ve son sunumların</p>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 rounded-xl p-5">
+          <div class="text-xs text-blue-300 font-bold uppercase tracking-wider mb-2">Toplam Sunum</div>
+          <div class="text-4xl font-black">23</div>
+          <div class="text-xs text-slate-400 mt-1">+5 bu hafta</div>
+        </div>
+        <div class="bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/20 rounded-xl p-5">
+          <div class="text-xs text-purple-300 font-bold uppercase tracking-wider mb-2">Ortalama Skor</div>
+          <div class="text-4xl font-black">78</div>
+          <div class="text-xs text-green-400 mt-1">▲ %12 vs geçen ay</div>
+        </div>
+        <div class="bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl p-5">
+          <div class="text-xs text-green-300 font-bold uppercase tracking-wider mb-2">En İyi Skor</div>
+          <div class="text-4xl font-black">94</div>
+          <div class="text-xs text-slate-400 mt-1">2 gün önce</div>
+        </div>
+        <div class="bg-gradient-to-br from-pink-500/10 to-pink-500/5 border border-pink-500/20 rounded-xl p-5">
+          <div class="text-xs text-pink-300 font-bold uppercase tracking-wider mb-2">Toplam Süre</div>
+          <div class="text-4xl font-black">3.2<span class="text-xl">h</span></div>
+          <div class="text-xs text-slate-400 mt-1">Pratik zamanı</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANA İÇERİK -->
+  <main class="max-w-7xl mx-auto px-6 py-8 grid lg:grid-cols-3 gap-6">
+
+    <!-- SOL: Trend grafiği + radar -->
+    <div class="lg:col-span-2 space-y-6">
+
+      <!-- TREND GRAFİĞİ -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-xl font-bold">Confidence Trendi</h2>
+            <p class="text-sm text-slate-400">Son 14 günde skor gelişimin</p>
+          </div>
+          <div class="flex gap-2">
+            <button class="px-3 py-1.5 text-xs font-bold bg-blue-600 rounded-lg">14 Gün</button>
+            <button class="px-3 py-1.5 text-xs font-bold border border-slate-700 rounded-lg hover:bg-slate-800">30 Gün</button>
+            <button class="px-3 py-1.5 text-xs font-bold border border-slate-700 rounded-lg hover:bg-slate-800">3 Ay</button>
+          </div>
+        </div>
+        <canvas id="trendChart" height="100"></canvas>
+      </div>
+
+      <!-- RADAR GRAFİĞİ -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-xl font-bold">Yetenek Radarı</h2>
+            <p class="text-sm text-slate-400">Son sunumundaki 5 boyuttaki performans</p>
+          </div>
+        </div>
+        <canvas id="radarChart" height="180"></canvas>
+      </div>
+
+      <!-- SUNUM LİSTESİ -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <h2 class="text-xl font-bold mb-4">Son Sunumlar</h2>
+        <div id="presentationList" class="space-y-3"></div>
+      </div>
+
+    </div>
+
+    <!-- SAĞ: Detay paneli -->
+    <div class="space-y-6">
+
+      <!-- SEÇİLİ SUNUM DETAYI -->
+      <div class="bg-gradient-to-br from-purple-600/10 to-pink-600/10 border border-purple-500/30 rounded-2xl p-6">
+        <div class="text-xs font-bold text-purple-300 uppercase tracking-wider mb-2">En Son Sunum</div>
+        <div class="text-5xl font-black gradient-text mb-1">94</div>
+        <div class="text-sm text-slate-300 mb-4">⭐⭐⭐⭐⭐ Mükemmel!</div>
+
+        <div class="space-y-3 text-sm">
+          <div class="flex justify-between"><span class="text-slate-400">Süre</span><span class="font-bold">4d 23s</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">WPM</span><span class="font-bold">142</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Dolgu Kelime</span><span class="font-bold">8</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Göz Teması</span><span class="font-bold text-green-400">%92</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Konuşma Netliği</span><span class="font-bold text-green-400">%88</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Baskın Duygu</span><span class="font-bold">😊 Happy</span></div>
+        </div>
+
+        <div class="mt-5 pt-5 border-t border-purple-500/20">
+          <div class="text-xs font-bold text-purple-300 uppercase tracking-wider mb-2">LLM Analizi</div>
+          <div class="text-sm text-slate-300 mb-2"><strong>Ton:</strong> Profesyonel</div>
+          <div class="text-sm text-slate-300 mb-3"><strong>Özet:</strong> Akıcı konuşma, net yapı. Önerinin doğal entegrasyonu güçlü.</div>
+          <div class="text-sm text-purple-300"><strong>Öneri:</strong> Cümleler arası 1-2 sn duraklama daha etkili olur.</div>
+        </div>
+      </div>
+
+      <!-- DUYGU DAĞILIMI -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <h3 class="text-lg font-bold mb-4">Duygu Dağılımı</h3>
+        <canvas id="emotionChart" height="180"></canvas>
+      </div>
+
+      <!-- HIZLI AKSİYON -->
+      <button onclick="openPlatformModal()" class="w-full text-center block bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-6 hover:opacity-90 transition focus:outline-none">
+        <div class="text-3xl mb-2">🎤</div>
+        <div class="font-bold text-lg">Yeni Sunum Başlat</div>
+        <div class="text-xs text-blue-200 mt-1">Sanal platform seçimi ile sunumu başlat</div>
+      </button>
+
+    </div>
+  </main>
+
+  <!-- Platform Seçim Modali -->
+  <div id="platformModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 mx-4 shadow-2xl relative">
+      <button onclick="closePlatformModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold text-lg">✕</button>
+      <h3 class="text-xl font-bold mb-2">Sunum Platformu Seçin</h3>
+      <p class="text-xs text-slate-400 mb-6">Sunumu başlatmak istediğiniz platformu seçin. İlgili site yeni sekmede açılacak ve PresentAI eklentisi otomatik olarak devreye girecektir.</p>
+      
+      <div class="space-y-3">
+        <!-- Tarayıcı İçi Pratik -->
+        <a href="practice.html" class="flex items-center gap-4 p-4 bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/40 hover:to-purple-600/40 border border-purple-500/50 rounded-xl transition shadow-lg shadow-purple-500/10">
+          <div class="text-2xl">🎤</div>
+          <div class="text-left">
+            <div class="font-bold text-sm text-white">Tarayıcıda Canlı Pratik</div>
+            <div class="text-xs text-purple-200">Kamera ve mikrofon ile anında sunum çalışın</div>
+          </div>
+        </a>
+
+        <!-- Google Meet -->
+        <a href="https://meet.google.com/new" target="_blank" onclick="closePlatformModal()" class="flex items-center gap-4 p-4 bg-slate-950/50 hover:bg-slate-800 border border-slate-800 rounded-xl transition">
+          <div class="text-2xl">🟢</div>
+          <div class="text-left">
+            <div class="font-bold text-sm">Google Meet</div>
+            <div class="text-xs text-slate-500">Yeni bir Google Meet toplantısı başlat</div>
+          </div>
+        </a>
+        
+        <!-- Zoom -->
+        <a href="https://zoom.us" target="_blank" onclick="closePlatformModal()" class="flex items-center gap-4 p-4 bg-slate-950/50 hover:bg-slate-800 border border-slate-800 rounded-xl transition">
+          <div class="text-2xl">🔵</div>
+          <div class="text-left">
+            <div class="font-bold text-sm">Zoom Video</div>
+            <div class="text-xs text-slate-500">Zoom web portalına git</div>
+          </div>
+        </a>
+        
+        <!-- Microsoft Teams -->
+        <a href="https://teams.microsoft.com" target="_blank" onclick="closePlatformModal()" class="flex items-center gap-4 p-4 bg-slate-950/50 hover:bg-slate-800 border border-slate-800 rounded-xl transition">
+          <div class="text-2xl">🟣</div>
+          <div class="text-left">
+            <div class="font-bold text-sm">Microsoft Teams</div>
+            <div class="text-xs text-slate-500">Microsoft Teams web arayüzünü aç</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+  <script>
+    function openPlatformModal() {
+      document.getElementById('platformModal').classList.remove('hidden');
+    }
+    function closePlatformModal() {
+      document.getElementById('platformModal').classList.add('hidden');
+    }
+  </script>
+  <!-- COMING SOON TOAST -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+  <script>
+    function showComingSoon(message) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'bg-slate-800 border border-slate-700 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 transition-all transform translate-y-10 opacity-0';
+      toast.innerHTML = `
+        <span class="text-xl">🚧</span>
+        <div class="font-medium text-sm">` + (message || 'Yapım Aşamasında!') + `</div>
+      `;
+      container.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.classList.remove('translate-y-10', 'opacity-0');
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

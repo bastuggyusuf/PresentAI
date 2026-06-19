@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PresentAI ile canlı sunum pratiği yapın; konuşma hızı, dolgu kelimeler ve yüz ifadeleriniz gerçek zamanlı analiz edilsin.">
+  <title>PresentAI — Canlı Pratik</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .gradient-text {
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .soft-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+    .transcript-text {
+      font-size: 2.5rem;
+      line-height: 1.4;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body class="soft-bg text-white min-h-screen flex flex-col relative overflow-hidden">
+
+  <!-- TOP BAR -->
+  <header class="w-full px-6 py-4 flex items-center justify-between z-10 border-b border-slate-800/50 bg-slate-950/30">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-sm">🎤</div>
+      <span class="text-lg font-bold gradient-text">PresentAI Pratik Modu</span>
+    </div>
+    
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/50 border border-slate-700">
+        <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+        <span id="timerEl" class="text-sm font-mono font-bold">00:00</span>
+      </div>
+      <button id="endBtn" class="px-5 py-2 text-sm font-bold bg-red-500/10 text-red-400 border border-red-500/30 rounded-lg hover:bg-red-500 hover:text-white transition">
+        Bitir ve Kaydet
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 flex flex-col lg:flex-row p-6 gap-6 relative z-10 h-full">
+    
+    <!-- LEFT: Transkript (Konuşma Alanı) -->
+    <div class="flex-1 flex flex-col justify-center items-center px-4 md:px-12 relative">
+      <!-- Arka plan süsü -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl -z-10"></div>
+      
+      <!-- Start Overlay -->
+      <div id="startOverlay" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/80 backdrop-blur-sm z-50 rounded-2xl">
+        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-2xl mb-4 animate-bounce shadow-xl shadow-purple-500/20">🎤</div>
+        <h2 class="text-2xl font-bold mb-2">Hazır mısınız?</h2>
+        <p class="text-slate-400 mb-6 max-w-sm text-center text-sm">Tarayıcınızın mikrofonunuzu dinleyebilmesi için önce başlatmanız gerekir.</p>
+        <button id="startBtn" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl font-bold text-lg hover:opacity-90 transition shadow-lg shadow-blue-500/20">
+          Sunuma Başla
+        </button>
+      </div>
+
+      <div id="statusText" class="text-slate-400 mb-2 text-sm font-medium tracking-widest uppercase">Mikrofon bekleniyor...</div>
+      
+      <!-- Ses Seviyesi Göstergesi -->
+      <div class="w-64 h-2 bg-slate-800 rounded-full mb-6 overflow-hidden">
+        <div id="volumeBar" class="h-full bg-gradient-to-r from-green-400 to-blue-500 w-0 transition-all duration-75"></div>
+      </div>
+      
+      <div class="w-full max-w-4xl text-center">
+        <p id="transcriptEl" class="transcript-text text-slate-200 min-h-[140px]">
+          Konuşmaya başladığınızda söyledikleriniz burada belirecek...
+        </p>
+      </div>
+      
+      <!-- AI Coach Card -->
+      <div id="aiCoachCard" class="mt-12 bg-slate-900/80 border border-purple-500/30 rounded-2xl p-5 shadow-2xl shadow-purple-500/10 max-w-2xl w-full transform transition-all duration-500 translate-y-10 opacity-0">
+        <div class="flex items-start gap-4">
+          <div class="text-3xl mt-1">🤖</div>
+          <div>
+            <div class="text-xs font-bold text-purple-400 uppercase tracking-wider mb-1">AI Koç</div>
+            <p id="aiMessageEl" class="text-lg text-slate-200">Harika başladın! Böyle devam et.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Kamera ve Metrikler -->
+    <div class="w-full lg:w-80 flex flex-col gap-4">
+      
+      <!-- Kamera Görünümü -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden relative shadow-xl">
+        <div class="absolute top-3 left-3 px-2 py-1 bg-black/60 rounded text-[10px] font-bold text-white z-10 flex gap-1 items-center">
+          <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Kamera Aktif
+        </div>
+        <video id="webcam" autoplay playsinline muted class="w-full h-48 object-cover transform -scale-x-100"></video>
+        <canvas id="canvas" class="hidden"></canvas>
+      </div>
+
+      <!-- Metrikler -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex-1">
+        <h3 class="font-bold text-slate-300 mb-4 border-b border-slate-800 pb-2">Canlı Analiz</h3>
+        
+        <div class="space-y-5">
+          <!-- Duygu -->
+          <div>
+            <div class="text-xs text-slate-500 mb-1">BASKIN DUYGU</div>
+            <div class="flex items-center gap-3">
+              <div id="emotionEmoji" class="text-4xl">😐</div>
+              <div id="emotionText" class="text-2xl font-bold">Neutral</div>
+            </div>
+          </div>
+          
+          <!-- Kelime Hızı -->
+          <div>
+            <div class="text-xs text-slate-500 mb-1">HIZ (WPM)</div>
+            <div class="text-2xl font-bold text-blue-400" id="wpmEl">0</div>
+          </div>
+          
+          <!-- Dolgu Kelime -->
+          <div>
+            <div class="text-xs text-slate-500 mb-1">DOLGU KELİME (ee, şey)</div>
+            <div class="text-2xl font-bold text-orange-400" id="fillerEl">0</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="practice.js"></script>
+</body>
+</html>

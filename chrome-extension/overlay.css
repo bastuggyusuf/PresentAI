@@ -1,0 +1,138 @@
+/* PresentAI Overlay — Google Meet üzerine inject edilir */
+
+#presentai-overlay {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  width: 280px;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(139, 92, 246, 0.2);
+  z-index: 2147483647;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  user-select: none;
+  
+  /* Resizable styles */
+  resize: both;
+  overflow: hidden;
+  min-width: 240px;
+  min-height: 200px;
+  max-width: 450px;
+  max-height: 800px;
+}
+
+.presentai-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+  cursor: grab;
+}
+
+.presentai-header:active { cursor: grabbing; }
+
+.presentai-logo {
+  flex: 1;
+  font-weight: 700;
+  font-size: 14px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.presentai-toggle {
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.presentai-toggle:hover { opacity: 0.85; }
+.presentai-toggle.active { background: linear-gradient(135deg, #ef4444, #f97316); }
+
+.presentai-close {
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.presentai-close:hover { background: rgba(148, 163, 184, 0.15); color: white; }
+
+.presentai-body {
+  padding: 14px;
+}
+
+.presentai-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.presentai-stat-label {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.presentai-stat-value {
+  font-weight: 700;
+  font-size: 14px;
+  color: white;
+}
+
+.presentai-tip {
+  margin-top: 12px;
+  padding: 10px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 10px;
+  font-size: 12px;
+  color: #e2e8f0;
+  line-height: 1.5;
+}
+
+.presentai-status-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+.presentai-badge {
+  flex: 1;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.badge-active {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-inactive {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}

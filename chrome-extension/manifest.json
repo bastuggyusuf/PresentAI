@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "PresentAI — Sunum Koçu",
+  "version": "0.1.0",
+  "description": "Google Meet ve diğer video çağrılarında gerçek zamanlı sunum analizi ve geri bildirim.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "notifications"
+  ],
+  "host_permissions": [
+    "https://meet.google.com/*",
+    "https://*.zoom.us/*",
+    "https://teams.microsoft.com/*",
+    "http://localhost:8000/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meet.google.com/*",
+        "https://*.zoom.us/*",
+        "https://teams.microsoft.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["overlay.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["overlay.html"],
+      "matches": ["https://meet.google.com/*", "https://*.zoom.us/*", "https://teams.microsoft.com/*"]
+    }
+  ]
+}
